@@ -1,6 +1,9 @@
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
+const mongoose = require('mongoose');
+require('dotenv').config();
+const Message = require('./Models/message.js')
 
 
 const app = express();
@@ -16,14 +19,21 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
     console.log('A user connected');
-    socket.on('chat-message', (msg) => {
-        console.log('Got message:', msg);
+    const messages = await Message.find().sort({timestamp: -1}).limit(50);
+    socket.emit('old-messages', messages)
+    socket.on('chat-message', async (msg) => {
+        const message = new Message({text: msg});
+        await message.save();
+        console.log('Saved message:', msg);
         io.emit('chat-message', msg);
     });
 });
 
 server.listen(4000, () => {
     console.log('Server is running on port 4000');
+    mongoose.connect(process.env.MONGO_URI)
+        .then(() => console.log('Connected to MongoDB'))
+        .catch((error) => console.error('Error connecting to MongoDB:', error))
 });
