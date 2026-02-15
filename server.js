@@ -5,11 +5,14 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const Message = require('./Models/message.js');
 const authRoute = require('./Routes/route.js');
+const cors = require('cors');
 
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+
 app.use('/auth', authRoute)
 
 const server = http.createServer(app);

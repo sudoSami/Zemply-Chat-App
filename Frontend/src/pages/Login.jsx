@@ -1,0 +1,37 @@
+import { useState } from "react"
+import { Link } from 'react-router-dom'
+
+const Login = () => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+         const response = await fetch('http://localhost:4000/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    });
+    const data = await response.json();
+    if (response.ok) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('username', data.username);
+        alert(data.message);
+        // navigate to chat page
+    } else {
+        alert(data.message);
+    }
+    }
+
+    return (
+        <>
+            <h1>Login</h1>
+            <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+            <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <button onClick={handleSubmit}>Login</button>
+            <p>Don't have an account? <Link to="/auth/signup">Sign Up</Link></p>
+        </>
+    )
+}
+
+export default Login
