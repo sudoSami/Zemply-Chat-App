@@ -3,10 +3,15 @@ const http = require('http');
 const { Server } = require('socket.io');
 const mongoose = require('mongoose');
 require('dotenv').config();
-const Message = require('./Models/message.js')
+const Message = require('./Models/message.js');
+const authRoute = require('./Routes/route.js');
 
 
 const app = express();
+
+app.use(express.json());
+app.use('/auth', authRoute)
+
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
