@@ -1,10 +1,12 @@
 import { useState } from "react"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,7 +18,7 @@ const Signup = () => {
     const data = await response.json();
     if (response.ok) {
         alert(data.message);
-        // navigate to login page
+        navigate('/chat');
     } else {
         alert(data.message);
     }

@@ -21,6 +21,9 @@ function Chat() {
     socket.on('old-messages', (msgs)=> {
       setMessages(msgs.map(m=>m.text));
     })
+
+     return () => {
+        socket.disconnect();}
   }, [])
 
   const handleSend = () => {
@@ -39,6 +42,7 @@ function Chat() {
       </div>
       <input
         value={input}
+        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Type a message..."
       />

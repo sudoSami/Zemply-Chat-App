@@ -23,13 +23,9 @@ const io = new Server(server, {
     }
 });
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
-
 io.on('connection', async (socket) => {
     console.log('A user connected');
-    const messages = await Message.find().sort({timestamp: -1}).limit(50);
+    const messages = (await Message.find().sort({timestamp: -1}).limit(50)).reverse();
     socket.emit('old-messages', messages)
     socket.on('chat-message', async (msg) => {
         const message = new Message({text: msg});
@@ -39,9 +35,12 @@ io.on('connection', async (socket) => {
     });
 });
 
-server.listen(4000, () => {
-    console.log('Server is running on port 4000');
-    mongoose.connect(process.env.MONGO_URI)
-        .then(() => console.log('Connected to MongoDB'))
-        .catch((error) => console.error('Error connecting to MongoDB:', error))
-});
+
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log('Connected to MongoDB');
+        server.listen(4000, () => {
+            console.log('Server is running on port 4000');
+        });
+    })
+    .catch((error) => console.error('Error connecting to MongoDB:', error));
