@@ -1,3 +1,4 @@
+import './login.css'
 import { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
 
@@ -9,7 +10,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-         const response = await fetch('http://localhost:4000/auth/login', {
+         const response = await fetch('http://localhost:4000/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -18,20 +19,20 @@ const Login = () => {
     if (response.ok) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.username);
-        navigate('/chat')
+        navigate('/')
     } else {
         alert(data.message);
     }
     }
 
     return (
-        <>
+        <div className="auth-container">
             <h1>Login</h1>
             <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <button onClick={handleSubmit}>Login</button>
-            <p>Don't have an account? <Link to="/auth/signup">Sign Up</Link></p>
-        </>
+            <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+        </div>
     )
 }
 

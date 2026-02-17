@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link, useNavigate } from 'react-router-dom'
+import './login.css'
 
 
 const Signup = () => {
@@ -10,7 +11,7 @@ const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-         const response = await fetch('http://localhost:4000/auth/signup', {
+         const response = await fetch('http://localhost:4000/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password })
@@ -19,20 +20,20 @@ const Signup = () => {
     if (response.ok) {
         localStorage.setItem('token', data.token)
         localStorage.setItem('username', data.username)
-        navigate('/chat');
+        navigate('/');
     } else {
         alert(data.message);
     }
     }
 
     return (
-        <>
+        <div className="auth-container">
             <h1>Sign Up</h1>
             <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
             <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
             <button onClick={handleSubmit}>Sign Up</button>
-            <p>Already have an account? <Link to="/auth/login">Login</Link></p>
-        </>
+            <p>Already have an account? <Link to="/login">Login</Link></p>
+        </div>
     )
 }
 
