@@ -17,7 +17,8 @@ const Signup = () => {
     });
     const data = await response.json();
     if (response.ok) {
-        alert(data.message);
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('username', data.username)
         navigate('/chat');
     } else {
         alert(data.message);

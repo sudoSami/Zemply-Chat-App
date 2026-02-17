@@ -1,5 +1,6 @@
 const User = require('../Models/user');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const signup = async (req, res) => {
     try {
@@ -14,7 +15,8 @@ const signup = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = new User({username, password: hashedPassword});
         await newUser.save();
-        res.status(201).json({message: 'User created successfully'});
+        const token = jwt.sign({username: newUser.username}, process.env.JWT_SECRET, {expiresIn: '30d'});
+        res.status(201).json({message: 'User created successfully', token, username: newUser.username});
     } catch (error) {
         console.log(error);
         res.status(500).json({message: 'Internal server error'});

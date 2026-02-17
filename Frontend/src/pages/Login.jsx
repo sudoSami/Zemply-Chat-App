@@ -18,7 +18,6 @@ const Login = () => {
     if (response.ok) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('username', data.username);
-        alert(data.message);
         navigate('/chat')
     } else {
         alert(data.message);

@@ -27,11 +27,11 @@ io.on('connection', async (socket) => {
     console.log('A user connected');
     const messages = (await Message.find().sort({timestamp: -1}).limit(50)).reverse();
     socket.emit('old-messages', messages)
-    socket.on('chat-message', async (msg) => {
-        const message = new Message({text: msg});
+    socket.on('chat-message', async (data) => {
+        const message = new Message({text: data.text, username: data.username});
         await message.save();
-        console.log('Saved message:', msg);
-        io.emit('chat-message', msg);
+        console.log('Saved message:', data);
+        io.emit('chat-message', data);
     });
 });
 

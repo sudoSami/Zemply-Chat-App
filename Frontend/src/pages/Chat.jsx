@@ -19,7 +19,7 @@ function Chat() {
     })
 
     socket.on('old-messages', (msgs)=> {
-      setMessages(msgs.map(m=>m.text));
+      setMessages(msgs);
     })
 
      return () => {
@@ -28,7 +28,8 @@ function Chat() {
 
   const handleSend = () => {
     if (input.trim() === '') return;
-    socketRef.current.emit('chat-message', input)
+    const username = localStorage.getItem('username');
+    socketRef.current.emit('chat-message', {text: input, username})
     setInput('');
   }
 
@@ -37,7 +38,7 @@ function Chat() {
       <h1>Zemply Chat</h1>
       <div>
         {messages.map((msg, index) => (
-          <p key={index}>{msg}</p>
+          <p key={index}><strong>{msg.username}:</strong> {msg.text}</p>
         ))}
       </div>
       <input
