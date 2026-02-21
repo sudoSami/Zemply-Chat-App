@@ -2,6 +2,8 @@
 
 A real-time chat application built from scratch as a full-stack learning project.
 
+🔗 **Live Demo**: [zemply-chat-app.vercel.app](https://zemply-chat-app.vercel.app/)
+
 ![App Screenshot](Frontend/public/ss.png)
 
 ## What It Does
