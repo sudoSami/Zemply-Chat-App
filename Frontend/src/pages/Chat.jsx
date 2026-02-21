@@ -23,7 +23,7 @@ function Chat() {
   }, [messages]);
 
   useEffect(() => {
-    const socket = io('http://localhost:4000');
+    const socket = io('https://zemply-chat-app.onrender.com');
     socketRef.current = socket;
 
     socket.on('connect', () => {
