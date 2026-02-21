@@ -32,7 +32,7 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 1rem;
-    padding: 1rem 3rem;
+    padding: 1rem 2rem;
     margin-top: 70px;
     margin-bottom: 80px;
     overflow-y: auto;
@@ -60,7 +60,7 @@
     background: #16213e;
     position: fixed;
     bottom: 0;
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     width: 100%;
     display: flex;
     gap: 1rem;
@@ -78,7 +78,7 @@
 }
 
 .chat-input button{
-    padding: 10px 20px;
+    padding: 6px 14px;
     background-color: #e94560;
     color: white;
     border: none;
