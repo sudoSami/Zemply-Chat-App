@@ -85,3 +85,11 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.loading-text {
+    text-align: center;
+    color: #888;
+    font-size: 1rem;
+    padding: 20px;
+    align-self: center;
+}

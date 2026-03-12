@@ -8,6 +8,7 @@ function Chat() {
   const [input, setInput] = useState('');
   const socketRef = useRef(null);
   const bottomRef = useRef(null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -36,6 +37,7 @@ function Chat() {
 
     socket.on('old-messages', (msgs)=> {
       setMessages(msgs);
+      setLoading(false);
     })
 
      return () => {
@@ -62,6 +64,7 @@ function Chat() {
             <button onClick={handleLogout}>Logout</button>
         </div>
         <div className="chat-messages">
+          {loading && <p className="loading-text">Loading messages...</p>}
             {messages.map((msg, index) => (
                 <div key={index} className="message">
                     <strong>{msg.username}:</strong> {msg.text}
